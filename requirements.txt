@@ -1,2 +1,5 @@
 fastapi
 python-dotenv
+uvicorn
+xmltodict
+aiohttp
