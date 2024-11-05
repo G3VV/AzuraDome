@@ -6,13 +6,13 @@ app = FastAPI()
 
 @app.get("/protection/activate")
 async def activate():
-    await startProtection()
-    return {"message": "Activated"}
+    response = await startProtection()
+    return {"message": "activated"}
 
 @app.get("/protection/deactivate")
 async def activate():
     await stopProtection()
-    return {"message": "Activated"}
+    return {"message": "deactivated"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

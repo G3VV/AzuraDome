@@ -16,5 +16,5 @@ async def getListeners():
     async with aiohttp.ClientSession() as session:
         async with session.get(url, auth=aiohttp.BasicAuth(icecast_admin, icecast_password)) as response:
             if response.status == 200:
-                data = json.dumps(xmltodict.parse(await response.text()))
-                return data
+                data = xmltodict.parse(await response.text())
+                return json.loads(json.dumps(data))
