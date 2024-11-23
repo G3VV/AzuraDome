@@ -14,12 +14,18 @@ async def defence(stop_event):
             client_ips = {client['ID']: {'IP': client['IP'], 'Connected': client['Connected']} 
                           for client in data['icestats']['source']['listener']}
             
-            #sorted_clients = sorted(client_ips.items(), key=lambda item: item[1]['Connected'])
-            #print(sorted_clients)
-            #for i in range(len(sorted_clients)):
-            #    for j in range(i + 1, len(sorted_clients)):
-            #        if int(sorted_clients[j][1]['Connected']) - int(sorted_clients[i][1]['Connected']) > 5:
-            #            print
+
+
+            # this checks for clients that are mass connecting
+            for i in range(len(client_ips)):
+                for j in range(i+1, len(client_ips)):
+                    if client_ips[list(client_ips.keys())[i]]['IP'] == client_ips[list(client_ips.keys())[j]]['IP']:
+                        if client_ips[list(client_ips.keys())[i]]['Connected'] < client_ips[list(client_ips.keys())[j]]['Connected']:
+                            del client_ips[list(client_ips.keys())[i]]
+                        else:
+                            del client_ips[list(client_ips.keys())[j]]
+
+                        
 
             unique_ips = {}
             ip_count = {}

@@ -3,3 +3,4 @@ python-dotenv
 uvicorn
 xmltodict
 aiohttp
+pymongo
