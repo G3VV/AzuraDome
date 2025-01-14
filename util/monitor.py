@@ -31,7 +31,6 @@ async def getListeners():
 async def startMonitor():
     while True:
         listeners = await getListeners()
-        print(listeners)
         asyncio.sleep(2)
             
 

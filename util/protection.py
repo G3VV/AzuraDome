@@ -1,9 +1,13 @@
 from util.monitor import getListeners, icecast_url, icecast_mount, icecast_admin, icecast_password
 import asyncio
 import aiohttp
+import logging
 
-
+logging.basicConfig(level=logging.INFO)
 protection_task = None
+
+# TODO
+# - If connection time of a mass of clients is within the same 15 seconds, kick all.
 
 async def defence(stop_event):
     while not stop_event.is_set():
@@ -50,7 +54,7 @@ async def defence(stop_event):
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url, auth=aiohttp.BasicAuth(icecast_admin, icecast_password)) as response:
                         if response.status == 200:
-                            print(f"Kicked {client_ips[id]['IP']} connected for {client_ips[id]['Connected']} seconds")
+                            logging.info(f"Kicked {client_ips[id]['IP']} connected for {client_ips[id]['Connected']} seconds")
 
         await asyncio.sleep(2)
 

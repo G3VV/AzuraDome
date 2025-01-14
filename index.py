@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from util.protection import startProtection, stopProtection
+from util.protection import startProtection, stopProtection, protection_task
 from util.monitor import startMonitor
 import uvicorn
 import threading
@@ -16,6 +16,10 @@ async def activate():
 async def activate():
     await stopProtection()
     return {"message": "deactivated"}
+
+@app.get("/protection/status")
+async def status():
+    return {"status": "active" if protection_task is not None and not protection_task.done() else "inactive"}
 
 @app.get("/")
 async def root():
